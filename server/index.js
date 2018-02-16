@@ -197,8 +197,8 @@ io.on('connection', function(socket){
   });
   
   
-  
+  puerto =  process.env.PORT || 3000;
   /*Puerto por el que se conecta al servidor*/
-  http.listen(3000, function(){
+  http.listen(puerto, function(){
     console.log('listening on *:3000');
   });
