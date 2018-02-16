@@ -200,5 +200,5 @@ io.on('connection', function(socket){
   puerto =  process.env.PORT || 3000;
   /*Puerto por el que se conecta al servidor*/
   http.listen(puerto, function(){
-    console.log('listening on *:'+puerto);
-  });
+    console.log('ggglistening on *:'+puerto);
+  });     
