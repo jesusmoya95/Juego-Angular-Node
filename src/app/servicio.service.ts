@@ -20,7 +20,7 @@ export class ServicioService {
 
   constructor() { 
     this.usuarios = [];
-    this.socket = io(this.url);
+    this.socket = io();
     // Recive la lista de usuarios
     this.socket.on('usuarios', (usuarioslist) => {
       for (var i = 0; i < usuarioslist.length; i++){
