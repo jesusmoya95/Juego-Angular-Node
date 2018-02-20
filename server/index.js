@@ -148,26 +148,28 @@ io.on('connection', function(socket){
       // Recive mensaje para apuntar la respuesta de cada jugador en cada pregunta
       socket.on('seleccion', function(partida){
         if (partida.imagen == preguntas[pregunta-1].img_correcta){
-          let i = partida.usuario;
-          if (aciertos.i != undefined){
-            aciertos.i = +1;
-            console.log('El usuario: ' + partida.usuario + 'ha acertado');
+          let user = partida.usuario;
+          if (aciertos[user] != undefined){
+            aciertos[user] += 1;
+            console.log('El usuario: ' + partida.usuario + ' ha acertado');
+            console.log(aciertos)
           }
           else{
-            aciertos.i = 1
-            console.log('El usuario: ' + partida.usuario + 'ha acertado la primera vez');
+            aciertos[user] = 1
+            console.log('El usuario: ' + partida.usuario + ' ha acertado la primera vez');
+            console.log(aciertos);
           }
           
         }
         else{
-          let i = partida.usuario;
-          if (errores.i != undefined){
-            errores.i = +1;
-            console.log('El usuario: ' + partida.usuario + 'ha fallado');
+          let user = partida.usuario;
+          if (errores[user] != undefined){
+            errores[user] += 1;
+            console.log('El usuario: ' + partida.usuario + ' ha fallado');
           }
           else{
-            errores.i = 1
-            console.log('El usuario: ' + partida.usuario + 'ha fallado la primera vez');
+            errores[user] = 1
+            console.log('El usuario: ' + partida.usuario + ' ha fallado la primera vez');
           }
         }
       })
@@ -178,6 +180,8 @@ io.on('connection', function(socket){
         io.emit('control_fin', 'nada');
         io.emit('score_aciertos', aciertos);
         io.emit('score_fallos', errores);
+        console.log(aciertos);
+        console.log(errores);
         
       })
 
@@ -191,6 +195,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       console.log(usuarios);
       usuarios = usuarios.filter(usuario => usuario != socket.usuario);
+      
       console.log('Se ha desconectado un usuario: ', socket.usuario);
 
     });
@@ -200,5 +205,5 @@ io.on('connection', function(socket){
   puerto =  process.env.PORT || 3000;
   /*Puerto por el que se conecta al servidor*/
   http.listen(puerto, function(){
-    console.log('ggglistening on *:'+puerto);
+    console.log('listening on *:'+puerto);
   });     

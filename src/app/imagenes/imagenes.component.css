@@ -6,7 +6,11 @@
     margin-top: 30px;
 }
 .portada div{
-    margin-top: 20px;
+    margin-top: 0px;
+}
+
+.usuario{
+    background-color: seagreen
 }
 
 input{
@@ -20,6 +24,18 @@ input{
     width: 100%;
     margin-bottom: 25px;
     font-family: 'Lucida Sans';
+    font-weight: normal;
+    
+}
+
+.mensajes{
+    height: 400px;
+    overflow-y: auto;
+}
+
+.chat span{
+    font-weight: bold;
+    color: royalblue;
 }
 
 .escribir_chat{

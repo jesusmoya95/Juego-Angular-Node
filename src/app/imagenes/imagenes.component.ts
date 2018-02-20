@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicioService } from '../servicio.service';
+import { environment } from '../../environments/environment';
+import { OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var jquery: any;
 declare var $: any;
@@ -9,12 +12,65 @@ declare var $: any;
   templateUrl: './imagenes.component.html',
   styleUrls: ['./imagenes.component.css']
 })
-export class ImagenesComponent implements OnInit {
+export class ImagenesComponent implements OnInit, OnDestroy {
 
-  constructor(public servicio: ServicioService) { }
+  constructor(public servicio: ServicioService  ) { }
+  
 
-  ngOnInit() {
-    
+
+  ngOnDestroy(){
+    this.nick_name_dato = '';
+    this.nick_name_error  = '';
+    this.sesion_iniciada = false;
+    this.sala_dato  = '';
+    this.sala_unirse_dato  = '';
+    this.mostrar_usuario  = false;
+    this.mostrar_sesion= true;
+    this.mostrar_sala = false;
+    this.mostrar_empezar = false;
+    this.mensaje  = '';
+    this.usuarios = this.servicio.usuarios
+    this.mensaje_chat = this.servicio.mensajes_chat;
+    this.datos_juego = this.servicio.datos_juego;
+    this.seleccion = true;
+    this.preguntaaa = true;
+    this.acierto = false;
+    this.respuesta = '';
+    this.boton_siguiente = false;
+    this.persona = false;
+    this.jefe = false;
+    this.contador_pregungas = 1;
+    this.boton_fin = false;
+    this.imagen = environment.imagen;
+  }
+
+
+  ngOnInit( ) {
+
+    this.nick_name_dato = '';
+    this.nick_name_error  = '';
+    this.sesion_iniciada = false;
+    this.sala_dato  = '';
+    this.sala_unirse_dato  = '';
+    this.mostrar_usuario  = false;
+    this.mostrar_sesion= true;
+    this.mostrar_sala = false;
+    this.mostrar_empezar = false;
+    this.mensaje  = '';
+    this.usuarios = this.servicio.usuarios
+    this.mensaje_chat = this.servicio.mensajes_chat;
+    this.datos_juego = this.servicio.datos_juego;
+    this.seleccion = true;
+    this.preguntaaa = true;
+    this.acierto = false;
+    this.respuesta = '';
+    this.boton_siguiente = false;
+    this.persona = false;
+    this.jefe = false;
+    this.contador_pregungas = 1;
+    this.boton_fin = false;
+    this.imagen = environment.imagen;
+    this.servicio.datos_juego[0].mostrar_partida = false;
   }
 
   /* VARIABLES*/
@@ -40,8 +96,8 @@ export class ImagenesComponent implements OnInit {
   jefe = false;
   contador_pregungas = 1;
   boton_fin = false;
-
-
+  imagen = environment.imagen;
+  
   /*METODOS*/
 
   entrar(){
@@ -79,7 +135,7 @@ export class ImagenesComponent implements OnInit {
   }
 
   enviar_mensaje(){
-    if (this.sesion_iniciada){
+    if (this.sesion_iniciada && this.mensaje != ""){
       console.log(this.mensaje);
       this.servicio.enviar_mensaje(this.nick_name_dato, this.mensaje);
       this.mensaje = '';

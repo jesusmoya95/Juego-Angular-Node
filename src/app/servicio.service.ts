@@ -20,9 +20,10 @@ export class ServicioService {
 
   constructor() { 
     this.usuarios = [];
-    this.socket = io();
+    this.socket = io(this.url);
     // Recive la lista de usuarios
     this.socket.on('usuarios', (usuarioslist) => {
+      this.mensajes_chat.push({usuario: 'Sistema', texto: ('Usuarios conectados: ' + usuarioslist)});
       for (var i = 0; i < usuarioslist.length; i++){
         this.usuarios.push(usuarioslist[i]);
       }
@@ -30,11 +31,11 @@ export class ServicioService {
     })
 
     // Recive el usuario nuevo
-    //this.socket.on("nuevo_usuario", (user) =>{
-    //  this.usuarios.push(user);
-    //  console.log('Este es el nuevo usuario: ' + user);
-    //  
-    //})
+    this.socket.on("nuevo_usuario", (user) =>{
+      this.mensajes_chat.push({usuario: 'Sistema', texto: ('Se ha unido: ' + user)});
+      console.log('Este es el nuevo usuario: ' + user);
+      
+    })
 
     // Recibe usuarios conectados a la misma sala
     //this.socket.on('conexion_sala', function(user){
@@ -67,13 +68,15 @@ export class ServicioService {
     // Recive la puntuación de aciertos de del servidor
     this.socket.on('score_aciertos', dato =>{
       this.score_aciertos = dato;
-      console.log('Score aciertos' + dato)
+      console.log('Score aciertos' + dato);
+      console.log(dato);
     })
 
     // Recive la puntuación de fallos del servidor
     this.socket.on('score_fallos', dato =>{
       this.score_errores = dato;
-      console.log('Score fallos' + dato)
+      console.log('Score fallos' + dato);
+      console.log(dato);
     })
 
   }

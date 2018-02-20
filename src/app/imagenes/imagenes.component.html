@@ -96,7 +96,7 @@
         </div>
       </div>
 
-      <div class="row partida" *ngIf='this.servicio.datos_juego[0].mostrar_partida'>
+      <div class="row partida" *ngIf='this.servicio.datos_juego[0].mostrar_partida && this.sesion_iniciada'>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div *ngFor='let pregunta of this.servicio.datos_juego'>
 
@@ -115,21 +115,21 @@
                 </div>
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-9 col-lg-9">
-                    <img src="{{ pregunta.img_pregunta }}" id="img-pregunta" alt="Imagen">
+                    <img src="{{ imagen }}{{ pregunta.img_pregunta }}" id="img-pregunta" alt="Imagen">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                    <input type=image src="{{ pregunta.img_a }}" class="img-fluid" (click)="imagen_selec_a()" id="img-respuesta">
+                    <input type=image src="{{ imagen }}{{ pregunta.img_a }}" class="img-fluid" (click)="imagen_selec_a()" id="img-respuesta">
                   </div>
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                    <input type=image src="{{ pregunta.img_b }}" class="img-fluid " (click)="imagen_selec_b()" id="img-respuesta">
+                    <input type=image src="{{ imagen }}{{ pregunta.img_b }}" class="img-fluid " (click)="imagen_selec_b()" id="img-respuesta">
                   </div>
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                    <input type=image src="{{ pregunta.img_c }}" class="img-fluid" (click)="imagen_selec_c()" id="img-respuesta">              
+                    <input type=image src="{{ imagen }}{{ pregunta.img_c }}" class="img-fluid" (click)="imagen_selec_c()" id="img-respuesta">              
                   </div>
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                    <input type=image src="{{ pregunta.img_d }}" class="img-fluid" (click)="imagen_selec_d()" id="img-respuesta">              
+                    <input type=image src="{{ imagen }}{{ pregunta.img_d }}" class="img-fluid" (click)="imagen_selec_d()" id="img-respuesta">              
                   </div>
       
                 </div>
@@ -157,10 +157,21 @@
             
             <div *ngIf='this.servicio.control_fin_juego'>
               <div class="row">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4"></div>
-                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
-                  <h3>{{ this.servicio.score_aciertos }}</h3>
-                  <h3>{{ this.servicio.score_errores }}</h3>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                  <table>
+                    <tr>
+                      <th>Usuario</th>
+                      <th>Aciertos</th>
+                      <th>Fallos</th>
+                    </tr>
+                    <tr *ngFor=" let usuario of usuarios">
+                      <td><h3>{{ usuario }}</h3></td>
+                      <td><h3>{{ this.servicio.score_aciertos[usuario] }}</h3></td>
+                      <td><h3>{{ this.servicio.score_errores[usuario] }}</h3></td>
+                    </tr>
+                  </table>
+                  
+                  
                 </div>
 
               </div>
@@ -177,7 +188,7 @@
     <!-- chat -->
     <div class="col-12 col-sm-12 col-md-12 col-lg-4 chat">
       <h1>CHAT</h1>
-      <div>
+      <div class='mensajes' *ngIf="sesion_iniciada">
         <p *ngFor="let mensaje of mensaje_chat">
           <span>{{ mensaje.usuario }}</span>: {{ mensaje.texto }}
         </p>
